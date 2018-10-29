@@ -15,14 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 
 from users import views as uviews
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
 
-    url(r'^users/', include('users.urls')),
+    url(r'^index/$', uviews.index),
 
-    url(r'goods/(?P<cate>[0123456789]*)/(?P<page>[0123456789]*)',uviews.goods)
+    url(r'^news/$', uviews.news),
+
+    url(r'^headers/$', uviews.getheader),
 ]
