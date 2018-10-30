@@ -26,4 +26,16 @@ urlpatterns = [
     url(r'^news/$', uviews.news),
 
     url(r'^headers/$', uviews.getheader),
+
+    url(r'^resp/$', uviews.common_resp),
+
+    url(r'^jresp/$', uviews.json_resp),
+
+    url(r'^redirect/$', uviews.redirect_page),
+
+    url(r'^setcookie/$', uviews.set_cookie),
+    url(r'^getcookie/$', uviews.get_cookie),
+
+    url(r'^setsession/$', uviews.set_session),
+    url(r'^getsession/$', uviews.get_session),
 ]

@@ -1,9 +1,14 @@
 import json
 
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
+
 
 # Create your views here.
+from django.utils.encoding import smart_str
+
+from users import tools
+
 
 def index(request):
     return render(request,'index.html')
@@ -38,4 +43,38 @@ def getheader(request):
 
     return HttpResponse('ip:%s\nhost:%s\nlength:%s\nabc:%s'%(ip,host,content_length,abc))
 
+def common_resp(request):
+    '''返回普通的response对象'''
+    resp = HttpResponse('CommonResp你好啊',status=203,content_type='text/html;charset=utf-8')
+    return resp
 
+def json_resp(request):
+    '''返回json对象'''
+    resp = JsonResponse([{"a":"1","b":"2","名字":"小王八"},{"name":"cristina"}],content_type='application/json;charset=utf-8',safe=False)
+    return resp
+
+def redirect_page(request):
+    return HttpResponseRedirect('/users/index')
+
+def set_cookie(request):
+    resp = HttpResponse('保存cookie成功',content_type='text/html;charset=utf-8')
+    resp.set_cookie('username',tools.convert_str2_iso('小王八'))
+    # resp.set_cookie('username','小王八')
+    resp.set_cookie('userid',11)
+    return resp
+
+def get_cookie(request):
+    return HttpResponse(tools.convert_str2_utf(request.COOKIES.get('username'))+request.COOKIES.get('userid'))
+
+def set_session(request):
+    username = request.GET.get('username')
+    password = request.GET.get('password')
+    request.session['username'] = username
+    request.session['password'] = password
+
+    return HttpResponse('保存session成功')
+
+def get_session(request):
+    username = request.session.get('username')
+    password = request.session.get('password')
+    return HttpResponse(username+password)
