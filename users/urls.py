@@ -38,4 +38,6 @@ urlpatterns = [
 
     url(r'^setsession/$', uviews.set_session),
     url(r'^getsession/$', uviews.get_session),
+
+    url(r'^myop/?$',uviews.MyView.as_view())
 ]

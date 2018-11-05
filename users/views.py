@@ -2,14 +2,16 @@ import json
 
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-
+from django.views.generic import View
 
 # Create your views here.
 from django.utils.encoding import smart_str
 
 from users import tools
+from users.decorators import my_decorator
 
 
+@my_decorator
 def index(request):
     return render(request,'index.html')
 
@@ -75,6 +77,21 @@ def set_session(request):
     return HttpResponse('保存session成功')
 
 def get_session(request):
-    username = request.session.get('username')
-    password = request.session.get('password')
+    if request.method.lower() == 'get':
+        username = request.session.get('username')
+        password = request.session.get('password')
+    elif request.method.lower() == 'post':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
     return HttpResponse(username+password)
+
+
+class MyView(View):
+
+    def get(self,request):
+        return render(request,'index.html')
+
+    def post(self,request):
+        userid = request.POST.get('userid')
+        return HttpResponse('userid:'+str(userid))
+
