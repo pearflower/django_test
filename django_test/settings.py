@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    'django.contrib.sessions', # session模块
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware', # session中间件
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware', # csrf验证
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -77,8 +77,14 @@ WSGI_APPLICATION = 'django_test.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',  # 数据库产品
+        'HOST': "localhost",  # 数据库ip
+        'PORT': 3306,  # 数据库端口
+        'USER': "root",  # 用户名
+        'PASSWORD': "123456",  # 密码
+        'NAME': "db_django",  # 数据库名
     }
 }
 

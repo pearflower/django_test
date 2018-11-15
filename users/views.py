@@ -2,6 +2,7 @@ import json
 
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
 from django.views.generic import View
 
 # Create your views here.
@@ -69,10 +70,10 @@ def get_cookie(request):
     return HttpResponse(tools.convert_str2_utf(request.COOKIES.get('username'))+request.COOKIES.get('userid'))
 
 def set_session(request):
-    username = request.GET.get('username')
-    password = request.GET.get('password')
-    request.session['username'] = username
-    request.session['password'] = password
+    # username = request.GET.get('username')
+    # password = request.GET.get('password')
+    request.session['username'] = 'newone'
+    request.session['password'] = '99dawer'
 
     return HttpResponse('保存session成功')
 
@@ -91,6 +92,7 @@ class MyView(View):
     def get(self,request):
         return render(request,'index.html')
 
+    @method_decorator(my_decorator)
     def post(self,request):
         userid = request.POST.get('userid')
         return HttpResponse('userid:'+str(userid))
